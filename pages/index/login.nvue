@@ -1,0 +1,160 @@
+<template>
+	<view class="content">
+		<image class="logo" src="../../static/images/logo_bg.jpg"></image>
+		<view class="login">
+			<text class="login_tit">登录 </text>
+
+			<view class="login_li">
+				<image src="../../static/images/login_icon1.png" class="login_icon"></image>
+				<input type="text" v-model="account" class="input" placeholder="请输入手机号"
+					placeholder-style="color:#999; font-size:20px" />
+			</view>
+			<view class="login_li">
+				<image src="../../static/images/login_icon2.png" class="login_icon"></image>
+				<input password="true" v-model="pwd" class="input" placeholder="请输入密码"
+					placeholder-style="color:#999; font-size:20px" />
+			</view>
+			<text class="login_btn" @click="login">登录</text>
+
+			<view class="login_tip">
+				<!-- <navigator url="bang_phone" hover-class="none"><text class="left">注册</text></navigator> -->
+				<!-- <navigator url="zhao_mima" hover-class="none"><text class="right">忘记密码</text></navigator> -->
+				<!-- <text class="left"  @click="yklogin">游客登录</text> -->
+			</view>
+		</view>
+
+	</view>
+</template>
+
+<script>
+	import yu from '../../yu.js'
+	export default {
+		data() {
+			return {
+				xs: true,
+				account: '',
+				pwd: ''
+			}
+		},
+		onLoad() {
+			this.account = uni.getStorageSync("name");
+			this.pwd = uni.getStorageSync("pass");
+			if (this.account.length > 2) this.login();
+			//this.isxs();
+		},
+		methods: {
+			yklogin() {
+				this.account = "boya";
+				this.pwd = "999999";
+				this.login();
+			},
+			login() {
+				yu.dpost(100, (result) => {
+					if (result.state == 1) {
+						console.log(result);
+						var token = result.data.token;
+						uni.setStorageSync("token", token);
+						uni.setStorageSync("name", this.account);
+						uni.setStorageSync("pass", this.pwd);
+						uni.switchTab({
+							url: '../yuejuan/yuejuan'
+						})
+					} else {
+						yu.alert(result.msg);
+					}
+				}, {
+					account: this.account,
+					pwd: this.pwd
+				}, 1);
+			},
+			isxs() {
+				yu.dpost(90100, (result) => {
+					if (result.state == 1) {
+						this.xs = false;
+					}
+				}, {
+					account: this.account,
+				});
+			}
+		}
+	}
+</script>
+
+<style>
+	.content {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.logo {
+		height: 950rpx;
+		width: 750rpx;
+	}
+
+	.login {
+		width: 750rpx;
+		padding: 50rpx 100rpx;
+		margin-top: -290rpx;
+		z-index: 5;
+		border-top-left-radius: 50rpx;
+		border-top-right-radius: 50rpx;
+		background-color: #fff;
+	}
+
+	.login_li {
+		flex-direction: row;
+		align-items: center;
+		border-color: #ccc;
+		border-width: 0 0 1rpx 0;
+		border-style: solid;
+		height: 100rpx;
+		padding: 0rpx 0rpx 0;
+		background-color: #fff;
+		margin-bottom: 30rpx;
+	}
+
+	.login_icon {
+		width: 40rpx;
+		height: 40rpx;
+	}
+
+	.input {
+		width: 500rpx;
+		margin-left: 10rpx;
+	}
+
+	.login_btn {
+		height: 95rpx;
+		text-align: center;
+		line-height: 95rpx;
+		font-size: 34rpx;
+		margin-top: 60rpx;
+		border-radius: 100rpx;
+		color: #fff;
+		background-color: #01b7ab;
+	}
+
+	.login_tip {
+		justify-content: center;
+		flex-direction: row;
+		margin-top: 30rpx;
+		font-size: 32rpx;
+		padding: 0 4%;
+	}
+
+	.left {
+		color: #f4681a;
+		font-size: 32rpx;
+	}
+
+	.right {
+		color: #999;
+		font-size: 32rpx;
+	}
+
+	.login_tit {
+		font-size: 42rpx;
+		margin-bottom: 30rpx;
+	}
+</style>

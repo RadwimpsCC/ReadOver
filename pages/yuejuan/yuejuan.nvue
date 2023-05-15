@@ -1,0 +1,237 @@
+<template>
+	<view class="content">
+		<view class="top">
+			<view class="top_tit">
+				<view class="top_li">
+					<text class="top_li_name">考试月份</text>
+					<picker mode="date" @change="bindMonthChange" fields="month">
+						<view class="uni-input">
+							<text class=" top_li_input top_li_input2">{{examMonth}}</text>
+						</view>
+					</picker>
+				</view>
+				<view class="top_li">
+					<text class="top_li_name">阅卷状态</text>
+					<!-- <input type="text" value="" class="top_li_input top_li_input2" /> -->
+					<picker mode="selector" :range="examStateRange" range-key="name" @change="bindStateChange">
+						<view class="uni-input">
+							<text class=" top_li_input top_li_input2">{{examStateRange[examStateIndex].name}}</text>
+						</view>
+					</picker>
+				</view>
+			</view>
+
+			<view class="top_input">
+				<image src="../../static/images/so.png" class="top_input_so"></image>
+				<input type="text" v-model="key" class="input_so" placeholder="请输入考试名称"
+					placeholder-style="font-size:15px;" confirm-type="search" @confirm="examNameSelect" />
+			</view>
+		</view>
+
+		<view class="yj_li" v-for="(item,index) in list">
+			<view class="li_left">
+				<text class="li_name">{{item.title}}</text>
+				<text class="li_time">考试时间：{{item.time}}</text>
+			</view>
+			<text class="li_right" @click="startClick(index)">开始阅卷</text>
+		</view>
+		<!-- <view class="yj_li">
+			<view class="li_left">
+				<text class="li_name">周测三（初一数学）</text>
+				<text class="li_time">考试时间：2021-05-23至2021-05-31</text>
+			</view>
+			<text class="li_right" @click="start">开始阅卷</text>
+		</view> -->
+		<uni-load-more iconType="auto" :status="status" />
+	</view>
+</template>
+
+<script>
+	import yu from '../../yu.js'
+	export default {
+		data() {
+			return {
+				title: 'Hello',
+				examMonth: '请选择月份',
+				examStateRange: [{
+					id: 0,
+					name: "全部"
+				}, {
+					id: 1,
+					name: "阅卷中"
+				}, {
+					id: 2,
+					name: "已完成"
+				}],
+				examStateIndex: 0,
+				page: 0,
+				pagecount: 0,
+				status: 'more',
+				list: [],
+				key: ''
+			}
+		},
+		onLoad() {
+			this.loadList();
+		},
+		onReachBottom() {
+			if (this.status != "more") { //当前不是加载中或没有更多
+				return;
+			}
+			this.loadList(1);
+		},
+		methods: {
+			startClick(index) {
+				uni.navigateTo({
+					url: '../yuejuan_ing/yuejuan_ing?id=' + this.list[index].id
+				})
+			},
+			bindMonthChange(e) {
+				if (this.examMonth == e.detail.value) {
+					return;
+				}
+				this.examMonth = e.detail.value;
+				this.loadList(0);
+			},
+			bindStateChange(e) {
+				if (this.examStateIndex == e.detail.value) {
+					return;
+				}
+				this.examStateIndex = e.detail.value;
+				this.loadList(0);
+			},
+			examNameSelect(e) {
+				this.loadList(0);
+			},
+			loadList(type) {
+				var requestPage = 0;
+				if (type == null || type == 0) {
+					requestPage = 1;
+					type = 0;
+				} else {
+					if (this.page >= this.pagecount) {
+						return;
+					}
+					requestPage = this.page + 1;
+				}
+				this.status = "loading";
+				yu.dpost(101, (result) => {
+					if (result.state == 1) {
+						if (type == 0) {
+							this.list.length = 0;
+						}
+						this.list.push.apply(this.list, result.data.list);
+						this.page = result.data.page;
+						this.pagecount = result.data.pagecount;
+						if (this.page >= this.pagecount) {
+							this.status = "noMore";
+						} else {
+							this.status = "more";
+						}
+						if (type == 0) {
+							uni.stopPullDownRefresh();
+						}
+					} else {
+						yu.alert(result.msg);
+						this.status = "noMore";
+					}
+				}, {
+					page: requestPage,
+					month: this.examMonth == "请选择月份" ? '' : this.examMonth,
+					yjstate: this.examStateRange[this.examStateIndex].id,
+					key: this.key
+				});
+			}
+		}
+	}
+</script>
+
+<style>
+	page{background-color: #f5ebe2;}
+	.top {
+		background-color: #fff;
+		padding: 30rpx 20rpx;
+		justify-content: center;
+	}
+
+	.top_tit {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.top_li {
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.top_li_name {
+		font-size: 30rpx;
+		color: #373737;
+		margin-right: 10rpx;
+	}
+
+	.top_li_input {
+		width: 200rpx;
+		padding: 0 10rpx;
+		height: 60rpx;
+		border-radius: 8rpx;
+		border-width: 1rpx;
+		border-style: solid;
+		border-color: #ddd;
+		font-size: 26rpx;
+		line-height: 60rpx;
+		color: #999999;
+	}
+
+	.top_input {
+		margin: 30rpx 0rpx;
+		padding: 15rpx;
+		align-items: center;
+		border-radius: 8rpx;
+		background-color: #faf7f5;
+		flex-direction: row;
+	}
+
+	.top_input_so {
+		width: 42rpx;
+		height: 42rpx;
+		margin-right: 10rpx;
+	}
+
+	.input_so {
+		width: 600rpx;
+		font-size: 30rpx;
+		line-height: 30rpx;
+	}
+
+	.yj_li {
+		width: 710rpx;
+		background-color: #fff;
+		margin: 20rpx 0 0 20rpx;
+		padding: 25rpx;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.li_name {
+		font-size: 30rpx; text-overflow: ellipsis; lines: 1;
+	}
+
+	.li_time {
+		font-size: 28rpx;
+		margin-top: 15rpx;
+		color: #666;
+	}
+	.li_left{width:480rpx ;}
+	.li_right {
+		width: 160rpx;
+		height: 60rpx;
+		line-height: 60rpx;
+		font-size: 28rpx;
+		color: #fff;
+		text-align: center;
+		background-color: #ff5d32;
+		border-radius: 8rpx;
+	}
+</style>

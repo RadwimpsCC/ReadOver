@@ -1,0 +1,1 @@
+{"version":3,"sources":["uni-app:///main.js"],"names":["createPage","Page"],"mappings":";;;;;;;;;;kDAAA;AACA;AACA,kO;AACAA,UAAU,CAACC,wBAAD,CAAV,C","file":"pages/student/baogaoxiangqing.js","sourcesContent":["import 'uni-pages';\nimport Vue from 'vue'\nimport Page from './pages/student/baogaoxiangqing.vue'\ncreatePage(Page)"],"sourceRoot":""}

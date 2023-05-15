@@ -1,0 +1,105 @@
+<template>
+	<view class="content">
+		<!-- <image src="../../static/images/fanhui_icon.png" class="fanghui"></image> -->
+		<image src="../../static/images/wode_bg.png" class="wode_bg" mode="widthFix"></image>
+		<view class="wode">
+			<image src="../../static/images/touxiang.png" class="touxiang"></image>
+			<text class="name">{{username}}</text>
+			<text class="sm">打造优质、智能教育辅助系统 </text>
+			<text class="btn" @click="logout()">退出登录 </text>
+		</view>
+
+	</view>
+</template>
+
+<script>
+	import yu from '../../yu.js'
+	export default {
+		data() {
+			return {
+				username:''
+			}
+		},
+		onLoad() {
+			this.getUserInfo();
+		},
+		methods: {
+			logout() {
+				uni.removeStorageSync("token");
+				uni.removeStorageSync("name");
+				uni.removeStorageSync("pass");
+				uni.reLaunch({
+					url: '../index/login'
+				});
+			},getUserInfo(){
+				yu.dpost(106,(result)=>{
+					if(result.state == 1){
+						this.username = result.data.name;
+						
+					}else{
+						yu.alert(result.msg);
+					}
+				},{},1);
+			}
+		}
+	}
+</script>
+
+<style>
+	.content {
+		flex: 1;
+	}
+
+	.fanghui {
+		position: fixed;
+		left: 30rpx;
+		top: 30rpx;
+		width: 40rpx;
+		height: 40rpx;
+	}
+
+	.wode_bg {
+		width: 750rpx;
+		height: 300rpx;
+	}
+
+	.wode {
+		margin-top: -200rpx;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.touxiang {
+		width: 180rpx;
+		height: 180rpx;
+		border-radius: 100rpx;
+		border-color: #fff;
+		border-width: 8rpx;
+		border-style: solid;
+	}
+
+	.name {
+		font-size: 38rpx;
+		text-align: center;
+		margin: 20rpx 0;
+	}
+
+	.sm {
+		font-size: 32rpx;
+		color: #666;
+	}
+
+	.btn {
+		width: 240rpx;
+		position: fixed;
+		left: 255rpx;
+		bottom: 80rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		border-radius: 100px;
+		color: #fff;
+		text-align: center;
+		font-size: 32rpx;
+		background-color: #ff5d32;
+	}
+</style>

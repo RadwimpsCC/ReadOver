@@ -1,0 +1,185 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
+		{
+			"path": "pages/index/login",
+			"style": {
+				"navigationBarTitleText": "爱探讨阅卷手机版",
+				"navigationStyle": "custom"
+			}
+
+		},
+		{
+			"path": "pages/yuejuan_detail/yuejuan_detail_x",
+			"style": {
+				"navigationBarTitleText": "阅卷任务",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2",
+				"navigationStyle": "custom"
+			}
+
+		},
+		{
+			"path": "pages/yuejuan_detail/yuejuan_detail_online",
+			"style": {
+				"navigationBarTitleText": "在线阅卷任务",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2",
+				"navigationStyle": "custom"
+			}
+		
+		},
+		{
+			"path": "pages/yuejuan/yuejuan",
+			"style": {
+				"navigationBarTitleText": "阅卷任务",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+
+			}
+		},
+		{
+			"path": "pages/fenxi/index",
+			"style": {
+				"navigationBarTitleText": "分析报告",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+
+			}
+		},
+		{
+			"path": "pages/fenxi/avr",
+			"style": {
+				"navigationBarTitleText": "平均分",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+
+			}
+		},
+		{
+			"path": "pages/fenxi/gaikuang",
+			"style": {
+				"navigationBarTitleText": "概况",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+
+			}
+		},
+		{
+			"path": "pages/fenxi/kaoshi_xq",
+			"style": {
+				"navigationBarTitleText": "考试详情",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+
+			}
+		},
+		{
+			"path": "pages/fenxi/paihang",
+			"style": {
+				"navigationBarTitleText": "排行榜",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+
+			}
+		},
+		{
+			"path": "pages/fenxi/sanlv",
+			"style": {
+				"navigationBarTitleText": "三率分析",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+
+			}
+		},
+		{
+			"path": "pages/yuejuan_ing/yuejuan_ing",
+			"style": {
+				"navigationBarTitleText": "开始阅卷",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+
+			}
+		},
+
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "爱探讨",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/yuejuan_detail/yuejuan_detail",
+			"style": {
+				"navigationBarTitleText": "阅卷",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#f5ebe2"
+			}
+		}, {
+			"path": "pages/index/original",
+			"style": {
+				"navigationBarTitleText": "原卷查看",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/index/answers",
+			"style": {
+				"navigationBarTitleText": "答案查看",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/wode/wode",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#01b7ab",
+				"backgroundColor": "#fff",
+				"navigationStyle": "custom"
+
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "aitantao",
+		"navigationBarBackgroundColor": "#01b7ab",
+		"backgroundColor": "#F8F8F8",
+		"rpxCalcMaxDeviceWidth": 960,
+		"rpxCalcBaseDeviceWidth": 375,
+		"rpxCalcIncludeWidth": 750
+	},
+	"tabBar": {
+		"color": "#202020",
+		"selectedColor": "#ff5d32",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"height": "50px",
+		"fontSize": "10px",
+		"iconWidth": "24px",
+		"spacing": "3px",
+		"list": [{
+				"pagePath": "pages/yuejuan/yuejuan",
+				"iconPath": "static/images/tab_icon1.png",
+				"selectedIconPath": "static/images/tab_icon1_1.png",
+				"text": "阅卷中心"
+			},
+			{
+				"pagePath": "pages/fenxi/index",
+				"iconPath": "static/images/tab1.png",
+				"selectedIconPath": "static/images/tab11.png",
+				"text": "分析报告"
+			},
+			{
+				"pagePath": "pages/wode/wode",
+				"iconPath": "static/images/tab_icon3.png",
+				"selectedIconPath": "static/images/tab_icon3_3.png",
+				"text": "个人中心"
+			}
+		]
+
+	}
+}
